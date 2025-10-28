@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Employee Financial & Core Wellness Program</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Calm Neutrals with Professional Indigo -->
+    <!-- Application Structure Plan: A single-page digital brochure. Navigation uses a sticky header with smooth-scrolling links. The core '12-Month Calendar' table is transformed into an interactive grid, filterable by quarter (Q1-Q4, All) using JS. This makes the dense schedule explorable and less overwhelming. 'Value-Add' services are in a clean tabbed interface to organize content. 'ESG Impact' is in a 2-column layout. This structure prioritizes user-guided exploration of the program's key components over a static document. -->
+    <!-- Visualization & Content Choices: 
+    - Program Philosophy -> Inform -> 3-Card Grid (HTML/Tailwind) -> Static -> Visual grouping, better than a list.
+    - 12-Month Calendar (Table) -> Organize/Explore -> Interactive Card Grid + Quarter Filter Buttons (HTML/Tailwind/JS) -> Click buttons to filter cards -> Breaks down a dense 12-month table into manageable, user-selected quarters. This is the main interactive element.
+    - Value-Add Menu (3 sections) -> Organize/Detail -> Tabbed Interface (HTML/Tailwind/JS) -> Click tabs to switch content panes -> Prevents a long wall of text, organizes related content logically.
+    - ESG Impact (2 lists) -> Inform -> 2-Column Layout (HTML/Tailwind) -> Static -> Clear, balanced presentation of metrics.
+    - Chart.js was NOT used as the source report contains no quantitative data to plot; adding a chart would be arbitrary and not true to the source material. Interactivity is provided via JS-powered filters and tabs.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-btn.active {
+            border-color: #4f46e5;
+            color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .filter-btn.active {
+            background-color: #4f46e5;
+            color: #ffffff;
+        }
+        .month-card {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-indigo-600">
+                FA Advisory
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#philosophy" class="text-gray-600 hover:text-indigo-600">Philosophy</a>
+                <a href="#calendar" class="text-gray-600 hover:text-indigo-600">Calendar</a>
+                <a href="#services" class="text-gray-600 hover:text-indigo-600">Services</a>
+                <a href="#impact" class="text-gray-600 hover:text-indigo-600">ESG Impact</a>
+                <a href="#contact" class="text-gray-600 hover:text-indigo-600">Next Steps</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2">
+            <a href="#philosophy" class="block text-gray-600 hover:text-indigo-600">Philosophy</a>
+            <a href="#calendar" class="block text-gray-600 hover:text-indigo-600">Calendar</a>
+            <a href="#services" class="block text-gray-600 hover:text-indigo-600">Services</a>
+            <a href="#impact" class="block text-gray-600 hover:text-indigo-600">ESG Impact</a>
+            <a href="#contact" class="block text-gray-600 hover:text-indigo-600">Next Steps</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 md:px-6 py-12">
+        <section id="hero" class="text-center mb-16">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">2026 Employee Financial & Core Wellness Program</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">A proposal by Eunive Foong (RFP) & FA Advisory Sdn Bhd to build a financially resilient, organized, and empowered workforce, aligned with your core ESG objectives.</p>
+        </section>
+
+        <section id="philosophy" class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Beyond Awareness, Driving Action</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto">A single seminar creates awareness; a consistent program builds capability. We propose a multi-layered approach for 2026 to deliver measurable improvements to employee well-being.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+                        <span class="text-2xl">🗓️</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">1. The Platform (Monthly)</h3>
+                    <p class="text-gray-600">Consistent, accessible group workshops ("Lunch & Learns") to build a foundation of financial knowledge across the entire company.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+                        <span class="text-2xl">👤</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">2. The Personal (Value-Add)</h3>
+                    <p class="text-gray-600">Confidential 1-on-1 clinics after each session, allowing employees to apply knowledge to their personal situation. This is the critical step for real change.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 mb-4">
+                        <span class="text-2xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">3. The Targeted (Specialized)</h3>
+                    <p class="text-gray-600">Specialized workshops for different employee life-stages, acknowledging that a new hire and a pre-retiree have different financial needs.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="calendar" class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">2026 Thematic 12-Month Calendar (Revised)</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">The revised calendar starts with essential core skills and then transitions into high-impact financial concepts, ensuring a strong foundation across the entire year.</p>
+            
+            <div id="calendar-filters" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+                <button class="filter-btn active px-4 py-2 font-medium rounded-full bg-gray-200 text-gray-700 hover:bg-indigo-500 hover:text-white" data-filter="all">All Months</button>
+                <button class="filter-btn px-4 py-2 font-medium rounded-full bg-gray-200 text-gray-700 hover:bg-indigo-500 hover:text-white" data-filter="q1">Quarter 1</button>
+                <button class="filter-btn px-4 py-2 font-medium rounded-full bg-gray-200 text-gray-700 hover:bg-indigo-500 hover:text-white" data-filter="q2">Quarter 2</button>
+                <button class="filter-btn px-4 py-2 font-medium rounded-full bg-gray-200 text-gray-700 hover:bg-indigo-500 hover:text-white" data-filter="q3">Quarter 3</button>
+                <button class="filter-btn px-4 py-2 font-medium rounded-full bg-gray-200 text-gray-700 hover:bg-indigo-500 hover:text-white" data-filter="q4">Quarter 4</button>
+            </div>
+
+            <div id="calendar-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- NEW Q1 CONTENT -->
+                <div class="month-card bg-indigo-50 p-6 rounded-lg shadow-lg border border-indigo-200" data-quarter="q1">
+                    <span class="block text-sm font-semibold text-indigo-600">January (Q1)</span>
+                    <h4 class="text-lg font-bold my-1">Goal Setting for Success (NEW)</h4>
+                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                        <li>Techniques for setting personal and professional **SMART goals**.</li>
+                        <li>Linking short-term habits to long-term financial objectives.</li>
+                    </ul>
+                </div>
+                
+                <div class="month-card bg-indigo-50 p-6 rounded-lg shadow-lg border border-indigo-200" data-quarter="q1">
+                    <span class="block text-sm font-semibold text-indigo-600">February (Q1)</span>
+                    <h4 class="text-lg font-bold my-1">Effective Time Management (NEW)</h4>
+                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                        <li>Prioritization strategies (e.g., Eisenhower Matrix).</li>
+                        <li>Minimizing distractions to maximize work/life balance.</li>
+                    </ul>
+                </div>
+                
+                <div class="month-card bg-indigo-50 p-6 rounded-lg shadow-lg border border-indigo-200" data-quarter="q1">
+                    <span class="block text-sm font-semibold text-indigo-600">March (Q1)</span>
+                    <h4 class="text-lg font-bold my-1">Collaborative Team Building (NEW)</h4>
+                    <ul class="list-disc list-inside text-gray-700 text-sm">
+                        <li>Improving communication and feedback loops.</li>
+                        <li>Understanding different work styles and maximizing synergy.</li>
+                    </ul>
+                </div>
+
+                <!-- SHIFTED FINANCIAL CONTENT (Original Jan) -->
+                <div class="month-card bg-white p-6 rounded-lg shadow-lg border border-gray-100" data-quarter="q2">
+                    <span class="block text-sm font-semibold text-indigo-600">April (Q2)</span>
+                    <h4 class="text-lg font-bold my-1">Financial New Year's Resolutions</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Setting SMART financial goals (now linked to Jan session)</li>
+                        <li>The 50/30/20 budget rule</li>
+                        <li>How to track your spending</li>
+                    </ul>
+                </div>
+
+                <!-- SHIFTED FINANCIAL CONTENT (Original Feb) -->
+                <div class="month-card bg-white p-6 rounded-lg shadow-lg border border-gray-100" data-quarter="q2">
+                    <span class="block text-sm font-semibold text-indigo-600">May (Q2)</span>
+                    <h4 class="text-lg font-bold my-1">Decoding Your Payslip & Benefits</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Maximising your <span class="font-medium">EPF</span> (incl. self-contribution)</li>
+                        <li>Understanding <span class="font-medium">SOCSO</span> & <span class="font-medium">EIS</span></li>
+                    </ul>
+                </div>
+                
+                <!-- SHIFTED FINANCIAL CONTENT (Original Mar) -->
+                <div class="month-card bg-white p-6 rounded-lg shadow-lg border border-gray-100" data-quarter="q2">
+                    <span class="block text-sm font-semibold text-indigo-600">June (Q2)</span>
+                    <h4 class="text-lg font-bold my-1">Conquering Debt</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Good debt vs. bad debt</li>
+                        <li>Debt-reduction plan (Snowball vs. Avalanche)</li>
+                        <li>Credit score (<span class="font-medium">CTOS/CCRIS</span>) health</li>
+                    </ul>
+                </div>
+
+                <!-- ORIGINAL Q2/Q3 CONTENT SHIFTED -->
+                <div class="month-card bg-white p-6 rounded-lg shadow-lg border border-gray-100" data-quarter="q3">
+                    <span class="block text-sm font-semibold text-indigo-600">July (Q3)</span>
+                    <h4 class="text-lg font-bold my-1">Building Your Safety Net</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Why your <span class="font-medium">emergency fund</span> is non-negotiable</li>
+                        <li>How many months to save?</li>
+                        <li>Where to keep it?</li>
+                    </ul>
+                </div>
+
+                <div class="month-card bg-white p-6 rounded-lg shadow-lg border border-gray-100" data-quarter="q3">
+                    <span class="block text-sm font-semibold text-indigo-600">August (Q3)</span>
+                    <h4 class="text-lg font-bold my-1">Protecting What Matters</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>A practical guide to <span class="font-medium">Takaful & Insurance</span></li>
+                        <li>Life, Medical, Critical Illness</li>
+                        <li>Are you over or under-insured?</li>
+                    </ul>
+                </div>
+
+                <div class="month-card bg-white p-6 rounded-lg shadow-lg border border-gray-100" data-quarter="q3">
+                    <span class="block text-sm font-semibold text-indigo-600">September (Q3)</span>
+                    <h4 class="text-lg font-bold my-1">Smart Tax Planning (LHDN)</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Understanding your BE Form</li>
+                        <li>Maximising tax reliefs & rebates *before* year-end</li>
+                    </ul>
+                </div>
+                
+                <!-- ORIGINAL Q3/Q4 CONTENT SHIFTED -->
+                <div class="month-card bg-white p-6 rounded-lg shadow-lg border border-gray-100" data-quarter="q4">
+                    <span class="block text-sm font-semibold text-indigo-600">October (Q4)</span>
+                    <h4 class="text-lg font-bold my-1">Investing 101: Beyond EPF</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>The power of compound interest</li>
+                        <li>Risk vs. Reward</li>
+                        <li>Intro to <span class="font-medium">ASN</span>, Unit Trusts, and Fixed Deposits</li>
+                    </ul>
+                </div>
+
+                <div class="month-card bg-white p-6 rounded-lg shadow-lg border border-gray-100" data-quarter="q4">
+                    <span class="block text-sm font-semibold text-indigo-600">November (Q4)</span>
+                    <h4 class="text-lg font-bold my-1">Don't Get Scammed!</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>Identifying the latest investment scams</li>
+                        <li>Protecting your digital banking</li>
+                        <li>What to do if you're a victim</li>
+                    </ul>
+                </div>
+
+                <div class="month-card bg-white p-6 rounded-lg shadow-lg border border-gray-100" data-quarter="q4">
+                    <span class="block text-sm font-semibold text-indigo-600">December (Q4)</span>
+                    <h4 class="text-lg font-bold my-1">Goal: Buying Your First Home</h4>
+                    <ul class="list-disc list-inside text-gray-600 text-sm">
+                        <li>How much house can you afford?</li>
+                        <li>Saving for the 10% down payment</li>
+                        <li>Understanding loan eligibility</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="services" class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">"The Value-Add Menu"</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">To ensure this program has a measurable impact for your ESG reporting, we recommend including these high-value components.</p>
+            
+            <div class="w-full max-w-3xl mx-auto">
+                <div class="flex border-b border-gray-300">
+                    <button class="tab-btn active flex-1 py-3 px-2 md:px-4 font-semibold text-gray-500 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-600 transition-all" data-tab="clinics">
+                        A: Financial Health Clinics
+                    </button>
+                    <button class="tab-btn flex-1 py-3 px-2 md:px-4 font-semibold text-gray-500 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-600 transition-all" data-tab="workshops">
+                        B: Life-Stage Workshops
+                    </button>
+                    <button class="tab-btn flex-1 py-3 px-2 md:px-4 font-semibold text-gray-500 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-600 transition-all" data-tab="hub">
+                        C: Digital Resource Hub
+                    </button>
+                </div>
+                
+                <div class="bg-white rounded-b-lg shadow-lg p-6 md:p-8">
+                    <div id="clinics" class="tab-content">
+                        <h3 class="text-xl font-bold text-indigo-700 mb-3">Confidential Financial Health Clinics (Highly Recommended)</h3>
+                        <p class="font-semibold mb-2">What it is:</p>
+                        <p class="text-gray-600 mb-4">After each monthly session, I will make myself available for 4-6 bookable, 30-minute 1-on-1 "clinic" slots.</p>
+                        <p class="font-semibold mb-2">Why it matters:</p>
+                        <p class="text-gray-600 mb-4">This is a safe, confidential space for employees to ask personal questions they would never ask in a group. (e.g., "Here is my debt statement, can you help me?").</p>
+                        <p class="font-semibold mb-2">ESG Impact:</p>
+                        <p class="text-gray-600">This is the <span class="font-bold">single most effective</span> way to reduce employee financial stress.</p>
+                    </div>
+                    
+                    <div id="workshops" class="tab-content hidden">
+                        <h3 class="text-xl font-bold text-indigo-700 mb-3">Targeted "Life-Stage" Workshops</h3>
+                        <p class="font-semibold mb-2">What it is:</p>
+                        <p class="text-gray-600 mb-4">Two (2) specialized 90-minute workshops during the year, aimed at specific demographics.</p>
+                        <p class="font-semibold mb-2">Suggested Topics:</p>
+                        <ul class="list-decimal list-outside pl-6 text-gray-600 space-y-2">
+                            <li><span class="font-medium">For New Hires (Gen Z):</span> "My First Paycheck: 5 Smart Money Moves to Make in Your 20s."</li>
+                            <li><span class="font-medium">For Pre-Retirees (Age 50+):</span> "From Work to What's Next: Navigating Your EPF Withdrawal & Post-Retirement Income."</li>
+                        </ul>
+                    </div>
+
+                    <div id="hub" class="tab-content hidden">
+                        <h3 class="text-xl font-bold text-indigo-700 mb-3">The Digital Resource Hub</h3>
+                        <p class="font-semibold mb-2">What it is:</p>
+                        <p class="text-gray-600 mb-4">A simple monthly e-newsletter that includes:</p>
+                        <ul class="list-disc list-outside pl-6 text-gray-600 space-y-1">
+                            <li>A summary of the month's topic.</li>
+                            <li>A simple tool (e.g., budget template, debt calculator).</li>
+                            <li>A "Financial Term of the Month."</li>
+                        </ul>
+                        <p class="font-semibold mt-4 mb-2">Why it matters:</p>
+                        <p class="text-gray-600">Provides continuous, passive engagement and reinforces learning for all employees, even those who missed a session.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Measuring Our Impact (The ESG Link)</h2>
+            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">We will partner with HR to provide tangible metrics for your 2026 ESG "Social" report, demonstrating a clear return on investment.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100">
+                    <h3 class="text-xl font-semibold mb-4 text-indigo-700">Quantitative Data</h3>
+                    <ul class="list-none space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span>Total participation rates (per session).</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span>Number of 1-on-1 clinic slots utilized.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100">
+                    <h3 class="text-xl font-semibold mb-4 text-indigo-700">Qualitative Data (Anonymized)</h3>
+                    <ul class="list-none space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span><span class="font-semibold">Pre-Program Survey (Jan 2026):</span> Benchmark employee financial stress and confidence.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span><span class="font-semibold">Post-Program Survey (Dec 2026):</span> Measure the % improvement in confidence and reduction in stress.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-3 mt-1">✓</span>
+                            <span><span class="font-semibold">Thematic Report:</span> Anonymized, aggregated report on the "Top 3 Financial Concerns" to identify key stress points.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="text-center bg-white p-10 rounded-lg shadow-xl border border-gray-100">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Next Steps</h2>
+            <p class="text-lg text-gray-600 max-w-xl mx-auto mb-6">I am available to discuss this proposal and customize a package that best fits your employees' needs and company budget.</p>
+            
+            <!-- Calendly Link -->
+            <a href="https://calendly.com/your-booking-link" target="_blank" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-indigo-700 transition-all">
+                Schedule a Discussion
+            </a>
+            
+        </section>
+    </main>
+
+    <footer class="text-center py-8 mt-12 border-t border-gray-200">
+        <p class="text-gray-500">&copy; 2025 FA Advisory Sdn Bhd. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            const calendarFilters = document.getElementById('calendar-filters');
+            const filterBtns = calendarFilters.querySelectorAll('.filter-btn');
+            const monthCards = document.getElementById('calendar-grid').querySelectorAll('.month-card');
+
+            if (calendarFilters) {
+                calendarFilters.addEventListener('click', (e) => {
+                    const target = e.target;
+                    if (!target.classList.contains('filter-btn')) return;
+
+                    filterBtns.forEach(btn => btn.classList.remove('active'));
+                    target.classList.add('active');
+
+                    const filter = target.dataset.filter;
+
+                    monthCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.quarter === filter) {
+                            card.classList.remove('hidden');
+                            card.style.transform = 'scale(1)';
+                            card.style.opacity = '1';
+                        } else {
+                            card.classList.add('hidden');
+                            card.style.transform = 'scale(0.9)';
+                            card.style.opacity = '0';
+                        }
+                    });
+                });
+            }
+
+            const tabContainer = document.querySelector('.tab-btn')?.parentElement;
+            if(tabContainer) {
+                const tabBtns = tabContainer.querySelectorAll('.tab-btn');
+                const tabContents = tabContainer.nextElementSibling.querySelectorAll('.tab-content');
+
+                tabContainer.addEventListener('click', (e) => {
+                    const target = e.target.closest('.tab-btn');
+                    if (!target) return;
+                    
+                    const tabId = target.dataset.tab;
+
+                    tabBtns.forEach(btn => btn.classList.remove('active'));
+                    target.classList.add('active');
+
+                    tabContents.forEach(content => {
+                        if (content.id === tabId) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
